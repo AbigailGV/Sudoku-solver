@@ -9,7 +9,7 @@ document.addEventListener('DOMContentLoaded', function(){
     for(let row = 0; row < gridsize; row++){
         const sudokuRow = document.createElement("tr");
         for(let column = 0; column < gridsize; column++){
-            const cell = document.createElement("tc");
+            const cell = document.createElement("td");
             const input = document.createElement("input");
             input.type = "number";
             input.className = "cell";
@@ -29,6 +29,7 @@ async function solveSudoku() {
     const gridsize = 9;
     const sudokuArray = [];
 
+    // Fill the sudokuArray with input values from the grid
     for(let row = 0; row < gridsize; row++){
         // Creates 9 void arrays inside the "sudokyArray"
         sudokuArray[row] = []; // [[]]
@@ -59,8 +60,8 @@ async function solveSudoku() {
                 const cell = document.getElementById(cellId);
 
                 // Fill all the solved values excluding user input and apply animation
-                if(!cell.classList-contains("user-input")){
-                    cellValue = sudokuArray[row][column];
+                if (!cell.classList.contains("user-input")) {
+                    cell.value = sudokuArray[row][column];
                     cell.classList.add("solved");
                     // A little delay for visualization
                     await sleep(20); 
@@ -105,7 +106,7 @@ function isValidMove(board, row, column, num){
 
     // Check rows and columns for conflicts
     for(let i = 0; i < gridsize; i++){
-        if(board[i][row] === num || board[i][column] === num){
+        if(board[row][i] === num || board[i][column] === num){
             // There is a conflict
             return false;
         }
