@@ -49,6 +49,7 @@ table td:nth-child(3n){
 
 input{
     outline: none;
+    -moz-appearance: textfield;
 }
 
 input::-webkit-outer-spin-button,
