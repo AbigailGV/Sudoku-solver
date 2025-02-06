@@ -14,6 +14,8 @@ document.addEventListener('DOMContentLoaded', function(){
             input.type = "number";
             input.className = "cell";
             input.id = `cell-${row}-${column}`;
+            input.min = 1;
+            input.max = 9;
             // Cell containing the input
             cell.appendChild(input);
             // Rows containing cells
@@ -43,7 +45,7 @@ async function solveSudoku() {
     // Identify user inputs and mark them
     for(let row = 0; row < gridsize; row++){
         for(let column = 0; column < gridsize; column++){
-            const cellId = `cellId-${row}-${column}`;
+            const cellId = `cell-${row}-${column}`;
             const cell = document.getElementById(cellId);
 
             if(sudokuArray[row][column] !== 0){
