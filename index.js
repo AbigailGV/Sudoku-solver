@@ -42,6 +42,13 @@ async function solveSudoku() {
             sudokuArray[row][column] = cellValue !== "" ? parseInt (cellValue) : 0;
         }
     }
+
+    // Verify if there are repeated numbers un rows, columns and subgrids
+    if (!isValidSudoku(sudokuArray)) {
+        alert("The current Sudoku has wrong entries. Verify your inputs.");
+        return;
+    }
+
     // Identify user inputs and mark them
     for(let row = 0; row < gridsize; row++){
         for(let column = 0; column < gridsize; column++){
@@ -77,10 +84,12 @@ async function solveSudoku() {
 
 function solveSudokuHelper(board){
     const gridsize = 9;
+    let emptyCell = false;
 
     for(let row = 0; row < gridsize; row++){
         for(let column = 0; column < gridsize; column++){
             if(board[row][column] === 0){
+                emptyCell = true;
                 for(let num = 1; num <=9; num++){
                     if(isValidMove(board, row, column, num)){
                         board[row][column] = num;
@@ -100,7 +109,7 @@ function solveSudokuHelper(board){
         }
     }
     // All cells filled
-    return true;
+    return emptyCell ? false : true;
 }
 
 function isValidMove(board, row, column, num){
@@ -126,6 +135,25 @@ function isValidMove(board, row, column, num){
         }
     }
     // No conflicts were founded
+    return true;
+}
+
+function isValidSudoku(board) {
+    const gridsize = 9;
+
+    for (let row = 0; row < gridsize; row++) {
+        for (let column = 0; column < gridsize; column++) {
+            let num = board[row][column];
+            if (num !== 0) {
+                // Temporary empty the cell in order to not full
+                board[row][column] = 0;
+                if (!isValidMove(board, row, column, num)) {
+                    return false; // There is a repeated number
+                }
+                board[row][column] = num; // Put number again
+            }
+        }
+    }
     return true;
 }
 
